@@ -1,0 +1,138 @@
+<div class="page-layout blank p-24 home main">
+
+
+
+  <div *ngIf="loadingIndicator == false" style="position: fixed;margin-right: 45%;margin-top: 100px;">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <!--
+  <mat-card [formGroup]="form" style="margin-top:15px;">
+    <div fxLayoutAlign.gt-md="space-around center" fxLayout="row" class="section1">
+      <mat-form-field fxFlex="22">
+        <input matInput placeholder="رقم الهاتف" formControlName="mobile">
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="22">
+        <input matInput [min]="minDate" [max]="maxDate" formControlName="to" (focus)="toDatePicker.open()" [matDatepicker]="toDatePicker"
+          placeholder="المتصلون قبل تاريخ">
+        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #toDatePicker startView="year" [startAt]="startDate"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex="22">
+        <input matInput placeholder="IP" formControlName="ip">
+        <mat-icon matSuffix>laptop</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="22">
+        <mat-select placeholder="الموقع" formControlName="location">
+          <mat-option *ngFor="let oneLocation of locations" [value]="oneLocation">
+            {{ oneLocation.name }}
+          </mat-option>
+        </mat-select>
+
+        <mat-icon matSuffix>map</mat-icon>
+      </mat-form-field>
+
+    </div>
+
+    <div style="margin: 15px 0px;" fxLayoutAlign.gt-md="space-around center" fxLayout="row" class="section1">
+
+      <div fxFlex="22">
+        <button mat-raised-button color="primary" (click)="getData(startPicker,endPicker)">بحث</button>
+      </div>
+      <mat-form-field fxFlex="22">
+        <input matInput [matTimepicker]="endPicker" [disabled]="form.value['to']==''" placeholder="المتصلون قبل وقت">
+        <mat-timepicker-toggle matSuffix [for]="endPicker"></mat-timepicker-toggle>
+        <mat-timepicker #endPicker color="primary"></mat-timepicker>
+      </mat-form-field>
+      <div fxFlex="22">
+      </div>
+      <div fxFlex="22">
+        <button mat-raised-button color="accent" (click)="export()">استخراج</button>
+      </div>
+    </div>
+    <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
+      [scrollbarH]="true" [reorderable]="reorderable" [limit]="100000">
+
+      <ngx-datatable-column [width]="150" name="الرقم" prop="mobile">
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="100" name="ماك" prop="nasipaddress">
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="100" name="IP" prop="mac">
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="150" name="تاريخ البدء" prop="acctstarttime">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          {{row.acctstarttime | date:' hh:mm-yyyy/MM/dd'}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [width]="150" name="المكان" prop="calledstationid">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <mat-chip-list>
+            <mat-chip [ngStyle]="{'background-color': colorsLocation[row.calledstationid]}" selected="true">{{getLocation(row.calledstationid)}}</mat-chip>
+          </mat-chip-list>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column [width]="25" name="ids">
+        <ng-template let-column="column" ngx-datatable-header-template>
+          <div style="margin-top:13px;" (click)="getData()">
+            <mat-icon style="color : rgb(145, 145, 145); cursor: pointer;">refresh</mat-icon>
+          </div>
+        </ng-template>
+
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </mat-card>-->
+  <div class="header" fxLayoutAlign="space-evenly center">
+    <mat-form-field fxFlex="30">
+      <input matInput placeholder="البريد الإلكتروني" (keyup)='updateFilter()' [(ngModel)]="filter.email">
+      <mat-icon matSuffix>email</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30">
+      <input matInput placeholder="الرقم " (keyup)='updateFilter()' [(ngModel)]="filter.mobile">
+      <mat-icon matSuffix>phone_iphone</mat-icon>
+    </mat-form-field>
+
+    <h4 fxFlex="25">SP {{cash}}</h4>
+
+  </div>
+
+  <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
+    [scrollbarH]="true" [reorderable]="reorderable">
+
+    <ngx-datatable-column [width]="150" name="الرقم" prop="client.mobile">
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [width]="100" name="البريد الإلكتروني" prop="client.email">
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="">
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <button style="background-color: #483d8b;" mat-raised-button class="mat-accent mr-16"
+          (click)="activeUser(row)">تفعيل</button>
+      </ng-template>
+    </ngx-datatable-column>
+
+
+
+    <ngx-datatable-column [width]="25" name="ids">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <div style="margin-top:13px;" (click)="getData()">
+          <mat-icon style="color : rgb(145, 145, 145); cursor: pointer;">refresh</mat-icon>
+        </div>
+      </ng-template>
+
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+</div>

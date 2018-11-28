@@ -1,0 +1,58 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0" style="direction: rtl" [ngStyle]="{'background-color': color.secondeColor}">
+    <div style="padding-top: 7px;" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">تفعيل الكود</span>
+      <button style="float: right;" mat-button class="mat-icon-button" (click)="close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+    </div>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+    <div fxLayout="row wrap" class="container infoDiv">
+      <div fxFlex="50" class="half">
+        <div style="" class="icon">
+          <mat-icon matSuffix style="">timer</mat-icon>
+        </div>
+        <div style="" class="label">
+          <span>{{code.used_count}} مرات</span>
+        </div>
+      </div>
+      <div fxFlex="50" class="half">
+        <div style="width: 100%" class="icon">
+          <mat-icon matSuffix style="">local_offer</mat-icon>
+        </div>
+        <div style="" class="label">
+          <label>{{code.price}} SP</label>
+        </div>
+      </div>
+    </div>
+    <div class="code">
+      <div class="" [ngStyle]="{'background-color': color.mainColor}">
+        <label>{{code.code}}</label>
+      </div>
+    </div>
+
+    <div class="status">
+      <label class="statusWord">حالة الرقم السري : </label>
+      <label class="pending" *ngIf="code.status=='pending'">الإنتظار</label>
+      <label class="pending" *ngIf="code.status=='sold'">مستخدم</label>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions style="direction: rtl;" class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <button mat-raised-button class="save-button mat-accent" *ngIf="code.status=='pending'" [ngStyle]="{'background-color': color.secondeColor}" (click)="sold()" aria-label="SAVE">
+           بيع
+        </button>
+
+    <button mat-raised-button class="save-button mat-accent" *ngIf="code.status=='sold'" [ngStyle]="{'background-color': color.secondeColor}" (click)="close()" aria-label="SAVE">
+           إغلاق
+        </button>
+    <!--<button mat-raised-button class="save-button mat-accent" (click)="save(false,startPicker,endPicker)" [disabled]="eventForm.invalid" aria-label="SAVE">
+            {{ 'Dialog.Add_Slotes.SAVE' | translate }}
+        </button>-->
+
+  </div>
+</div>

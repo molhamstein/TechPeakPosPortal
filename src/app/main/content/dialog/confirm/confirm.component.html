@@ -1,0 +1,37 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0" style="direction: rtl" [ngStyle]="{'background-color': '#3c4252'}">
+    <div style="padding-top: 7px;" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title" >
+        {{isError == false ? 'تفعيل' : 'خطأ'}}
+
+      </span>
+      <button style="float: right;" mat-button class="mat-icon-button" (click)="close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+    </div>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+    <div fxLayout="row wrap" class="container infoDiv">
+      <h4>{{message}}</h4>
+    </div>
+  </div>
+
+  <div mat-dialog-actions style="direction: rtl;" class="m-0 p-16" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <button mat-raised-button class="save-button mat-accent" *ngIf="isError==false" [ngStyle]="{'background-color': '#3c4252'}" (click)="close(true)"
+      aria-label="SAVE">
+           نعم
+        </button>
+
+    <button mat-raised-button class="save-button mat-accent" *ngIf="isError==false" [ngStyle]="{'background-color': '#3c4252'}" (click)="close(false)" aria-label="SAVE">
+           لا
+        </button>
+
+    <button mat-raised-button class="save-button mat-accent" *ngIf="isError==true" [ngStyle]="{'background-color': '#3c4252'}" (click)="close(false)" aria-label="SAVE">
+           تم
+        </button>
+
+
+  </div>
+</div>

@@ -1,0 +1,51 @@
+// component css goes here
+.mat-dialog-container {
+  padding: 0px !important;
+}
+
+.infoDiv {
+  .half {
+    .icon {
+      text-align: center;
+      width: 100%;
+      .mat-icon {
+        font-size: 45px;
+        width: 45px;
+        height: 45px;
+      }
+    }
+    .label {
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+}
+
+.code {
+  width: 100%;
+  padding: 10px 0px;
+  div {
+    padding: 10px;
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+    font-size: 28px;
+    margin: 10px auto;
+    width: fit-content;
+    text-shadow: 0px 0px 5px #333;
+  }
+}
+
+.status {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  .statusWord {
+    color: #5a5a5a;
+  }
+  .pending {
+    font-weight: bold;
+  }
+}
