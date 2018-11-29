@@ -4138,8 +4138,16 @@ var AuthGuardService = (function () {
         return false;
     };
     AuthGuardService.prototype.canActivate = function (route, state) {
+        var path = route.url[0];
         if (this.mainServ.loginServ.isLogin()) {
-            return true;
+            if (path == this.mainServ.loginServ.getType())
+                return true;
+            else {
+                // this.router.navigate([this.mainServ.loginServ.getType()]);
+                // return false;
+                this.mainServ.globalServ.reload();
+                return false;
+            }
         }
         // this.authService.setRedirectUrl(url);
         this.router.navigate(["/login"]);
@@ -4709,7 +4717,7 @@ var LoginService = (function () {
         this.cookieService.set('userName', data.user.username);
         this.cookieService.set('role', 'Seller');
         this.cookieService.set('type', data.location.type);
-        this.router.navigate(["/home"]);
+        this.router.navigate([data.location.type]);
     };
     LoginService.prototype.getRole = function () {
         return this.cookieService.get('role');
@@ -6146,7 +6154,7 @@ var Login2Module = (function () {
 /***/ "./src/app/main/content/pages/authentication/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"login\" fxLayout=\"column\" fusePerfectScrollbar>\r\n\r\n    <div id=\"login-form-wrapper\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\r\n\r\n        <div id=\"login-form\" *fuseIfOnDom [@animate]=\"{value:'*',params:{duration:'300ms',y:'100px'}}\">\r\n\r\n            <div class=\"logo\">\r\n                <img src=\"assets/images/logos/fuse.svg\">\r\n            </div>\r\n\r\n            <div class=\"title\">تسجيل الدخول</div>\r\n            <form name=\"loginForm\" [formGroup]=\"loginForm\" novalidate>\r\n\r\n                <mat-form-field>\r\n                    <input matInput placeholder=\"البريد الإلكتروني\" formControlName=\"email\">\r\n                    <mat-error *ngIf=\"loginFormErrors.email.required\">\r\n                        الرجاء إدخال البريد الإلكتروني \r\n                    </mat-error>\r\n                    <mat-error *ngIf=\"!loginFormErrors.email.required && loginFormErrors.email.email\">\r\n                        الرجاء إدخال بريد إلكتروني صحيح\r\n                    </mat-error>\r\n                </mat-form-field>\r\n\r\n                <mat-form-field>\r\n                    <input type=\"password\" matInput placeholder=\"كلمة السر\" formControlName=\"password\">\r\n                    <mat-error *ngIf=\"loginFormErrors.password.required\">\r\n                        الرجاء إدخال كلمة السر\r\n                    </mat-error>\r\n                </mat-form-field>\r\n\r\n                <div class=\"remember-forgot-password\" fxLayout=\"row\" fxLayout.xs=\"column\"\r\n                     fxLayoutAlign=\"space-between center\">\r\n                    <!--<mat-checkbox class=\"remember-me\" aria-label=\"Remember Me\">\r\n                        Remember Me\r\n                    </mat-checkbox>-->\r\n\r\n                    <a class=\"forgot-password\" [routerLink]=\"'/forgot-password'\">\r\n                        نسيت كلمة السر؟\r\n                    </a>\r\n                </div>\r\n\r\n                <button mat-raised-button color=\"accent\" class=\"submit-button\" aria-label=\"LOG IN\"\r\n                        [disabled]=\"loginForm.invalid\" (click)=\"login()\">\r\n                    تسجيل الدخول\r\n                </button>\r\n\r\n            </form>\r\n\r\n            <!--<div class=\"separator\">\r\n                <span class=\"text\">OR</span>\r\n            </div>-->\r\n\r\n            <!--<button mat-raised-button class=\"google\">\r\n                Log in with Google\r\n            </button>\r\n\r\n            <button mat-raised-button class=\"facebook\">\r\n                Log in with Facebook\r\n            </button>\r\n\r\n            <div class=\"register\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\r\n                <span class=\"text\">Don't have an account?</span>\r\n                <a class=\"link\" [routerLink]=\"'/pages/auth/register'\">Create an account</a>\r\n            </div>-->\r\n\r\n        </div>\r\n\r\n    </div>\r\n\r\n</div>"
+module.exports = "<div id=\"login\" fxLayout=\"column\" fusePerfectScrollbar>\r\n\r\n  <div id=\"login-form-wrapper\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\r\n\r\n    <div id=\"login-form\" *fuseIfOnDom [@animate]=\"{value:'*',params:{duration:'300ms',y:'100px'}}\">\r\n\r\n      <div class=\"logo\">\r\n        <img src=\"assets/images/logos/fuse.svg\">\r\n      </div>\r\n\r\n      <div class=\"title\">تسجيل الدخول</div>\r\n      <form name=\"loginForm\" [formGroup]=\"loginForm\" novalidate>\r\n\r\n        <mat-form-field>\r\n          <input matInput placeholder=\"البريد الإلكتروني\" formControlName=\"email\">\r\n          <mat-error *ngIf=\"loginFormErrors.email.required\">\r\n            الرجاء إدخال البريد الإلكتروني\r\n          </mat-error>\r\n          <mat-error *ngIf=\"!loginFormErrors.email.required && loginFormErrors.email.email\">\r\n            الرجاء إدخال بريد إلكتروني صحيح\r\n          </mat-error>\r\n        </mat-form-field>\r\n\r\n        <mat-form-field>\r\n          <input type=\"password\" matInput placeholder=\"كلمة السر\" formControlName=\"password\">\r\n          <mat-error *ngIf=\"loginFormErrors.password.required\">\r\n            الرجاء إدخال كلمة السر\r\n          </mat-error>\r\n        </mat-form-field>\r\n\r\n        <div class=\"remember-forgot-password\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutAlign=\"space-between center\">\r\n          <!--<mat-checkbox class=\"remember-me\" aria-label=\"Remember Me\">\r\n                        Remember Me\r\n                    </mat-checkbox>-->\r\n\r\n          <a class=\"forgot-password\" style=\"color: #4ea851;\" [routerLink]=\"'/forgot-password'\">\r\n                        نسيت كلمة السر؟\r\n                    </a>\r\n        </div>\r\n\r\n        <button mat-raised-button color=\"accent\" style=\"background-color:#4ea851;color:white\" class=\"submit-button\" aria-label=\"LOG IN\" [disabled]=\"loginForm.invalid\"\r\n          (click)=\"login()\">\r\n                    تسجيل الدخول\r\n                </button>\r\n\r\n      </form>\r\n\r\n      <!--<div class=\"separator\">\r\n                <span class=\"text\">OR</span>\r\n            </div>-->\r\n\r\n      <!--<button mat-raised-button class=\"google\">\r\n                Log in with Google\r\n            </button>\r\n\r\n            <button mat-raised-button class=\"facebook\">\r\n                Log in with Facebook\r\n            </button>\r\n\r\n            <div class=\"register\" fxLayout=\"column\" fxLayoutAlign=\"center center\">\r\n                <span class=\"text\">Don't have an account?</span>\r\n                <a class=\"link\" [routerLink]=\"'/pages/auth/register'\">Create an account</a>\r\n            </div>-->\r\n\r\n    </div>\r\n\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 

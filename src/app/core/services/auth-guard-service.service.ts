@@ -20,9 +20,19 @@ export class AuthGuardService implements CanLoad, CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
+    let path = route.url[0]
     if (this.mainServ.loginServ.isLogin()) {
-      return true;
+      if (path == this.mainServ.loginServ.getType())
+        return true;
+      else {
+        // this.router.navigate([this.mainServ.loginServ.getType()]);
+        // return false;
+        this.mainServ.globalServ.reload();
+        return false
+      }
     }
+
+
     // this.authService.setRedirectUrl(url);
     this.router.navigate(["/login"]);
     //window.location.reload();

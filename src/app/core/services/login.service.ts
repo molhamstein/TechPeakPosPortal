@@ -90,7 +90,7 @@ export class LoginService {
     this.cookieService.set('userName', data.user.username);
     this.cookieService.set('role', 'Seller');
     this.cookieService.set('type', data.location.type);
-    this.router.navigate(["/home"]);
+    this.router.navigate([data.location.type]);
   }
 
   getRole() {
