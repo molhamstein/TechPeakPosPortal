@@ -14,8 +14,8 @@ export class ActiveCodeComponent {
 
     loadingIndicator = true
 
-    code = {};
-    color = [];
+    code = { "used_count": 0, "code": "00000", "price": 0 ,"status":"pending"};
+    color = { "secondeColor": "white", "mainColor": "white" };
     constructor(
         public dialogRef: MatDialogRef<ActiveCodeComponent>,
         @Inject(MAT_DIALOG_DATA) public data,

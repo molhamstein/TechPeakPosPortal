@@ -45,11 +45,21 @@ export class FuseautomaticComponent {
                 this.fillColorArrray()
             }
         })
-        this.mainServ.APIServ.get("billing/getSellerCash?type=automatic").subscribe((data: any) => {
+        // this.mainServ.APIServ.get("paidAccess/getSellerCash?type=automatic").subscribe((data: any) => {
+        //     if (this.mainServ.APIServ.getErrorCode() == 0) {
+        //         if (data['SUM'] != null)
+        //             this.cash = data['SUM']
+        //         else
+        //             this.cash = 0
+        //     }
+        // })
+
+        this.mainServ.APIServ.get("seller/getMyCash").subscribe((data: any) => {
             if (this.mainServ.APIServ.getErrorCode() == 0) {
-                this.cash = data['SUM']
+                this.cash = data['cash']
             }
         })
+
     }
     fillColorArrray() {
         for (var index = 0; index < this.categories.length; index++) {

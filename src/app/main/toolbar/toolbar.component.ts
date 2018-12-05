@@ -18,7 +18,7 @@ export class FuseToolbarComponent {
     showLoadingBar: boolean;
     horizontalNav: boolean;
     userName: String;
-
+    locationName: String;
     constructor(
         private router: Router,
         private fuseConfig: FuseConfigService,
@@ -28,6 +28,8 @@ export class FuseToolbarComponent {
 
     ) {
         this.userName = this.mainServ.loginServ.getuserName()
+        this.locationName = this.mainServ.loginServ.getLocationName()
+        
         this.userStatusOptions = [
             {
                 'title': 'Online',
@@ -112,7 +114,7 @@ export class FuseToolbarComponent {
 
     }
 
-    logOut(){
+    logOut() {
         this.mainServ.loginServ.logout();
     }
 }

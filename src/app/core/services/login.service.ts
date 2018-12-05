@@ -14,6 +14,8 @@ export class LoginService {
   token;
   userName
   type;
+  locationName;
+  locationId;
   constructor(private cookieService: CookieService, private router: Router) {
     if (this.isLoginCook()) {
       this.isLogIn = true;
@@ -31,6 +33,9 @@ export class LoginService {
     this.token = this.cookieService.get("token");
     this.userName = this.cookieService.get("userName");
     this.type = this.cookieService.get("type");
+    this.locationName = this.cookieService.get("locationName");
+    this.locationId = this.cookieService.get("locationId");
+    
   }
 
   isLogin() {
@@ -52,6 +57,13 @@ export class LoginService {
 
   getType() {
     return this.type;
+  }
+  getLocationName() {
+    return this.locationName;
+  }
+
+  getLocationId() {
+    return this.locationId;
   }
 
 
@@ -90,6 +102,8 @@ export class LoginService {
     this.cookieService.set('userName', data.user.username);
     this.cookieService.set('role', 'Seller');
     this.cookieService.set('type', data.location.type);
+    this.cookieService.set('locationName', data.location.name);
+    this.cookieService.set('locationId', data.location.id);
     this.router.navigate([data.location.type]);
   }
 
@@ -103,6 +117,11 @@ export class LoginService {
     this.cookieService.delete('userName');
     this.cookieService.delete('role');
     this.cookieService.delete('type');
+    this.cookieService.delete('locationName');
+    this.cookieService.delete('locationId');
+
+    
+    
 
   }
 

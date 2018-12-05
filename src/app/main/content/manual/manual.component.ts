@@ -30,6 +30,7 @@ export class FusemanualComponent {
 
     }
 
+    loadingIndicator: boolean;
     rows = [];
     dummyData = [];
     refreshTime = 15000
@@ -53,11 +54,21 @@ export class FusemanualComponent {
                     )
             }
         })
-        this.mainServ.APIServ.get("billing/getSellerCash?type=manual").subscribe((data: any) => {
+        // this.mainServ.APIServ.get("paidAccess/getSellerCash?type=manual").subscribe((data: any) => {
+        //     if (this.mainServ.APIServ.getErrorCode() == 0) {
+        //         if (data['SUM'] != null)
+        //             this.cash = data['SUM']
+        //         else
+        //             this.cash = 0
+
+        //     }
+        // })
+        this.mainServ.APIServ.get("seller/getMyCash").subscribe((data: any) => {
             if (this.mainServ.APIServ.getErrorCode() == 0) {
-                this.cash = data['SUM']
+                this.cash = data['cash']
             }
         })
+
 
     }
 
@@ -96,7 +107,7 @@ export class FusemanualComponent {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.mainServ.APIServ.put("pendingClient/activePenddingClient", { "id": user.id }).subscribe((data: any) => {
+                this.mainServ.APIServ.put("pendingClient/activePenddingClient", { 'client_id': user.client_id, "id": user.id, location_id: parseInt(this.mainServ.loginServ.getLocationId()) }).subscribe((data: any) => {
                     if (this.mainServ.APIServ.getErrorCode() == 0) {
                         this.initData(true);
                     }
